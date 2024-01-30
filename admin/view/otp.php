@@ -2,7 +2,6 @@
 include_once __DIR__.'/../controller/AuthController.php';
 session_start();
 
-
 if (isset($_POST['otp_submit']))
 {
     if ($_POST['otp'] == $_SESSION['otp'])
