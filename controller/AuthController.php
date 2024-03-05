@@ -1,6 +1,6 @@
 <?php
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
 
@@ -8,39 +8,33 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-include_once __DIR__.'/../model/Authentication.php';
-include_once __DIR__.'/../vendor/PhpMailer/src/Exception.php';
-include_once __DIR__.'/../vendor/PhpMailer/src/PHPMailer.php';
-include_once __DIR__.'/../vendor/PhpMailer/src/SMTP.php';
+include_once __DIR__ . '/../model/Authentication.php';
+include_once __DIR__ . '/../vendor/PhpMailer/src/Exception.php';
+include_once __DIR__ . '/../vendor/PhpMailer/src/PHPMailer.php';
+include_once __DIR__ . '/../vendor/PhpMailer/src/SMTP.php';
 
-class AuthController extends Authentication 
+class AuthController extends Authentication
 {
     public function checkAuth()
-    {   
-        if (!isset($_SESSION['id']))
-        {
+    {
+        if (!isset($_SESSION['id'])) {
             header('location:logIn.php');
-        }
-        else 
-        {
-            if ($_SESSION['role'] == 'admin')
-            {
+        } else {
+            if ($_SESSION['role'] == 'admin') {
                 header('location:logIn.php');
             }
         }
     }
 
     public function forAuthUser()
-    {   
-        if (isset($_SESSION['id']) && $_SESSION['role'] == 'user')
-        {
+    {
+        if (isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'user') {
             header('location:index.php');
-        }
-        else if (isset($_SESSION['id']) && $_SESSION['role'] == 'admin')
-        {
-                header('location:admin/view/dashboard/index.php');
+        } else if (isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+            header('location:admin/view/dashboard/index.php');
         }
     }
+
 
     public function userLists()
     {
@@ -49,8 +43,8 @@ class AuthController extends Authentication
 
     public function sendMail($email)
     {
-        $otp = rand(1000,9999);
-   
+        $otp = rand(1000, 9999);
+
         $mailer = new PHPMailer(true);
 
         // Server settings
@@ -65,15 +59,14 @@ class AuthController extends Authentication
         $mailer->Username = "thansoeaung1213@gmail.com";
         $mailer->Password = "muvckxmywumszeda";
 
-        $mailer->setFrom("thansoeaung1213@gmail.com","KPOP Merch Mandalay");
+        $mailer->setFrom("thansoeaung1213@gmail.com", "KPOP Merch Mandalay");
         $mailer->addAddress($email);
 
         $mailer->IsHTML(true);
         $mailer->Subject = "Your account registration is in progress.";
-        $mailer->Body = 'Your OTP code is ::  '.$otp.'';
+        $mailer->Body = 'Your OTP code is ::  ' . $otp . '';
 
-        if ($mailer->send())
-        {
+        if ($mailer->send()) {
             return $otp;
         }
     }
@@ -93,15 +86,15 @@ class AuthController extends Authentication
         return $this->getUserById($id);
     }
 
-    public function editPassword($data,$userId)
+    public function editPassword($data, $userId)
     {
-        return $this->updatePassword($data,$userId);
+        return $this->updatePassword($data, $userId);
     }
 
     public function changePasswordMail($email)
     {
-        $otp = rand(1000,9999);
-   
+        $otp = rand(1000, 9999);
+
         $mailer = new PHPMailer(true);
 
         // Server settings
@@ -116,15 +109,14 @@ class AuthController extends Authentication
         $mailer->Username = "thansoeaung1213@gmail.com";
         $mailer->Password = "muvckxmywumszeda";
 
-        $mailer->setFrom("thansoeaung1213@gmail.com","KPOP Merch Mandalay");
+        $mailer->setFrom("thansoeaung1213@gmail.com", "KPOP Merch Mandalay");
         $mailer->addAddress($email);
 
         $mailer->IsHTML(true);
         $mailer->Subject = "Reset your password with OTP code.";
-        $mailer->Body = 'Your OTP code is ::  '.$otp.'';
+        $mailer->Body = 'Your OTP code is ::  ' . $otp . '';
 
-        if ($mailer->send())
-        {
+        if ($mailer->send()) {
             return $otp;
         }
     }
@@ -134,6 +126,3 @@ class AuthController extends Authentication
         return $this->updatePasswordByEmail($data);
     }
 }
-
-   
-?>

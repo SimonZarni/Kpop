@@ -122,8 +122,7 @@ class Authentication
         if ($statement->execute())
         {
             return true;
-        }
-        
+        }     
     }
 }
 

@@ -6,7 +6,6 @@ include_once __DIR__.'/controller/AuthController.php';
 $auth_controller = new AuthController();
 $auth_controller->forAuthUser();
 
-
 $auth_controller = new AuthController();
 $userLists = $auth_controller->userLists();
 
@@ -93,7 +92,6 @@ if (isset($_POST['submit']))
                   <?php if (isset($emailError) && $errorCondition)  echo '<span class="errorMsg">'.$emailError.'</span>'; ?>
                 </div>
                 
-
                 <button class="button" type="submit" name="submit">Continue</button>
 
                 <div class="login_signup">Don't have an account? <a href="signUp.php" id="signup">Signup</a></div>
