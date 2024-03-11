@@ -16,7 +16,7 @@ if (isset($_POST['otp_submit']))
             session_start();
             $_SESSION['id'] = $registeredId;
             $_SESSION['role'] = 'admin';
-            header("location:dashboard/index.php");
+            header("location:dashboard/logIn.php");
         }
        
     }
